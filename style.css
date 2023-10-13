@@ -39,6 +39,10 @@ body {
     position: relative;
 }
 
+.top.night {
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 67%, rgba(0,168,255,1) 100%);
+}
+
 .top__wrapper {
     position: relative;
     z-index: 10;

@@ -22,13 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const result = await res.json();
 
-        const {current:{condition, temp_c: temp, feelslike_c: feelsLike, humidity, precip_mm: precip, wind_kph: wind, cloud, last_updated: time, uv}, location:{name}} = result;
+        const {current:{condition, temp_c: temp, feelslike_c: feelsLike, humidity, precip_mm: precip, wind_kph: wind, cloud, last_updated: time, uv, is_day: isDay}, location:{name}} = result;
         
         return {
             name,
             condition,
             temp,
             time,
+            isDay,
             info: {feelsLike, humidity, precip, wind, cloud, uv}
         }
     };
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showWeather({
         name,
+        isDay,
         condition:{text, icon},
         temp,
         info,
@@ -76,6 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>`;
 
     top.insertAdjacentHTML('afterbegin', elem);
+
+    isDay === 0 ? top.classList.add('night') : top.classList.remove('night');
 
         for (let [key, value] of Object.entries(info)) {
             
