@@ -12,18 +12,21 @@
 <body>
 
    <div id="app">
+    <div class="top"></div>
 
     <div class="info">
     </div>
 
-    <div class="popup">
+    <div class="popup active">
         <div class="popup__close">&#10006;</div>
         <div class="popup__wrapper">
             <div class="popup__name">Введите название города</div>
-            <div class="popup__inner">
-                <input type="text" class="popup__input" placeholder="London">
-            <button class="popup__button">Показать</button>
-            </div>
+                <form class="popup__form">
+                    <input type="text" class="popup__input" placeholder="Москва" required>
+                    <button class="popup__button">Показать</button>
+                </form>
+
+            <div class="error-message">Введите корректное название</div>
         </div>
     </div>
    </div>

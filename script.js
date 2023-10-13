@@ -2,24 +2,31 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const app = document.querySelector('#app'),
+          top = app.querySelector('.top'),
           extraInfo = app.querySelector('.info'),
           popup = app.querySelector('.popup'),
+          form = popup.querySelector('.popup__form'),
+          input = popup.querySelector('.popup__input'),
+          errorMessage = popup.querySelector('.error-message'),
           apiLink = 'http://api.weatherapi.com/v1/current.json?key=a01ccd96aca24f04b3b114424231310&q=',
           weatherParams = {};
 
     async function getData(city) {
         const res = await fetch(`${apiLink}${city}&lang=ru`);
 
-        const result = await res.json();
+        if (!res.ok) throw new Error();
 
-        const {current:{condition, temp_c: temp, feelslike_c: feelsLike, humidity, precip_mm: precip, wind_kph: wind, cloud, last_updated: time}, location:{name}} = result;
+        const result = await res.json();
+        console.log(result)
+
+        const {current:{condition, temp_c: temp, feelslike_c: feelsLike, humidity, precip_mm: precip, wind_kph: wind, cloud, last_updated: time, uv}, location:{name}} = result;
         
         return {
             name,
             condition,
             temp,
             time,
-            info: {feelsLike, humidity, precip, wind, cloud}
+            info: {feelsLike, humidity, precip, wind, cloud, uv}
         }
     };
 
@@ -30,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'humidity': return ['Влажность', '%'];
             case 'wind': return ['Ветер', 'км/ч'];
             case 'cloud': return ['Облачность', '%'];
+            case 'uv': return ['УФ индекс', ''];
             default: return ['Показатель', 'метрика'];
         }
     };
@@ -41,10 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
         info,
         time}) {
 
+        top.innerHTML = '';
+        extraInfo.innerHTML = '';
+
         const elem = `
-        <div class="top">
         <div class="city-info">
-           Погода в
+           Погода в городе
         </div>
         <div class="city-name">${name}</div>
 
@@ -60,10 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="time">${time}</div>
                 <div class="temperature">${temp}°</div>
             </div>
-        </div>
-    </div>`;
+        </div>`;
 
-    app.insertAdjacentHTML('afterbegin', elem);
+    top.insertAdjacentHTML('afterbegin', elem);
 
         for (let [key, value] of Object.entries(info)) {
             
@@ -87,9 +96,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 weatherParams[key] = value;
             };
         })
-        .then(() => showWeather(weatherParams))
+        .then(() => {
+            showWeather(weatherParams);
+            errorMessage.style.display = 'none';
+            popupClassToggle();
+        })
+        .catch(() => {
+            errorMessage.style.display = 'block';
+        })
+        .finally(() => input.value = '');
     };
     
     updateWeather();
+
+    function popupClassToggle() {
+        popup.classList.toggle('active');
+    };
+
+    function popupClassToggleHandler(e) {
+        const target = e.target;
+
+        if (target && (target.classList.contains('city-name') || target.classList.contains('popup__close'))) {
+            popupClassToggle();
+        };
+    };
+
+    function formSubmitHandler(e) {
+        e.preventDefault();
+
+        const newCity = input.value;
+
+        updateWeather(newCity);
+
+    };
+
+
+    app.addEventListener('click', (e) => popupClassToggleHandler(e));
+
+    form.addEventListener('submit', (e) => formSubmitHandler(e));
 
 });

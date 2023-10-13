@@ -130,7 +130,7 @@ body {
     font-weight: 700;
 }
 
-.popup__inner {
+.popup__form {
     margin-top: 30px;
     display: flex;
     justify-content: space-between;
@@ -145,6 +145,7 @@ body {
     border-bottom: 1px solid #fff;
     font-size: 20px;
     font-weight: 300;
+    color: #fff;
 }
 
 .popup__button {
@@ -157,6 +158,7 @@ body {
     border: none;
     font-size: 20px;
     font-weight: 400;
+    cursor: pointer;
 }
 
 .popup__close {
@@ -164,4 +166,8 @@ body {
     top: 36px;
     right: 45px;
     cursor: pointer;
+}
+
+.error-message {
+    display: none;
 }
