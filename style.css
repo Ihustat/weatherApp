@@ -8,6 +8,18 @@ body {
     font-family: 'Oswald', sans-serif;
     letter-spacing: .1rem;
     background-color: #09143C;
+    overflow-x: hidden;
+}
+
+.btn {
+    padding: 15px 25px;
+    border-radius: 6px;
+    background: #ED3052;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
 }
 
 #app {
@@ -84,8 +96,9 @@ body {
     padding: 15px;
     background-color: #fff;
     display: grid;
-    grid-template-columns: repeat(2, 50%);
-    grid-template-rows: repeat(2, 80px);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-rows: repeat(3, 80px);
+    grid-auto-rows: 80px;
     gap: 10px;
 }
 
@@ -113,8 +126,10 @@ body {
     left: -150%;
     background-color: purple;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 30px;
     color: #fff;
     opacity: 0;
     transition: all .3s;
@@ -151,14 +166,6 @@ body {
 .popup__button {
     right: 0;
     top: 0;
-    padding: 15px 25px;
-    border-radius: 6px;
-    background: #ED3052;
-    color: #fff;
-    border: none;
-    font-size: 20px;
-    font-weight: 400;
-    cursor: pointer;
 }
 
 .popup__close {

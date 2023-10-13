@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
           form = popup.querySelector('.popup__form'),
           input = popup.querySelector('.popup__input'),
           errorMessage = popup.querySelector('.error-message'),
+          locatorBtn = document.querySelector('.popup__location-btn'),
           apiLink = 'http://api.weatherapi.com/v1/current.json?key=a01ccd96aca24f04b3b114424231310&q=',
           weatherParams = {};
 
@@ -79,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let [key, value] of Object.entries(info)) {
             
             const [ruName, metric] = checkParam(key);
+            
             const e = `
             <div class="info__item">
             <img src="img/${key}.svg" alt="info icon" class="info__item-img">
@@ -105,12 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(() => {
             errorMessage.style.display = 'block';
-            localStorage.setItem('city', '');
+            localStorage.setItem('coords', '');
         })
         .finally(() => input.value = '');
     };
     
-    updateWeather(localStorage.getItem('city') || 'Москва');
+    updateWeather(localStorage.getItem('coords') || 'Москва');
 
 
     function popupClassToggle() {
@@ -131,14 +133,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const newCity = input.value;
 
-        localStorage.setItem('city', input.value);
+        localStorage.setItem('coords', input.value);
 
         updateWeather(newCity);
+    };
+
+    function locatorHandler() {
+
+        function succes(position) {
+            const long = position.coords.longitude;
+            const lat = position.coords.latitude;
+
+
+            localStorage.setItem('coords', `${lat},${long}`);
+
+            updateWeather(`${lat},${long}`);
+        };
+
+        function failure() {
+            alert('Вы запретили испоьзовать данные местоположения');
+        };
+        
+        navigator.geolocation.getCurrentPosition(succes, failure)
     };
 
 
     app.addEventListener('click', (e) => popupClassToggleHandler(e));
 
     form.addEventListener('submit', (e) => formSubmitHandler(e));
+
+    locatorBtn.addEventListener('click', locatorHandler);
 
 });
