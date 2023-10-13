@@ -22,7 +22,14 @@ body {
     padding: 30px 30px;
     background: linear-gradient(93deg, #4CB8C4 0%, #3CD3AD 100%), #232323;
     color: #fff;
+    position: relative;
 }
+
+.top__wrapper {
+    position: relative;
+    z-index: 10;
+}
+
 
 .city-info {
     font-size: 24px;
@@ -38,6 +45,7 @@ body {
     font-weight: 700;
     letter-spacing: .2rem;
     background-color: purple;
+    cursor: pointer;
 }
 
 .weather-info {
