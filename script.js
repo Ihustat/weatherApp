@@ -1,6 +1,7 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
+
     const app = document.querySelector('#app'),
           top = app.querySelector('.top'),
           extraInfo = app.querySelector('.info'),
@@ -11,13 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
           apiLink = 'http://api.weatherapi.com/v1/current.json?key=a01ccd96aca24f04b3b114424231310&q=',
           weatherParams = {};
 
+    let isFirst = true;
+
     async function getData(city) {
         const res = await fetch(`${apiLink}${city}&lang=ru`);
 
         if (!res.ok) throw new Error();
 
         const result = await res.json();
-        console.log(result)
 
         const {current:{condition, temp_c: temp, feelslike_c: feelsLike, humidity, precip_mm: precip, wind_kph: wind, cloud, last_updated: time, uv}, location:{name}} = result;
         
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'cloud': return ['Облачность', '%'];
             case 'uv': return ['УФ индекс', ''];
             default: return ['Показатель', 'метрика'];
-        }
+        };
     };
 
     function showWeather({
@@ -90,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    function updateWeather(city='Москва') {
+    function updateWeather(city) {
         getData(city).then(res => {
             for (let [key, value] of Object.entries(res)) {
                 weatherParams[key] = value;
@@ -99,18 +101,21 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(() => {
             showWeather(weatherParams);
             errorMessage.style.display = 'none';
-            popupClassToggle();
+            if (!isFirst) popupClassToggle();
         })
         .catch(() => {
             errorMessage.style.display = 'block';
+            localStorage.setItem('city', '');
         })
         .finally(() => input.value = '');
     };
     
-    updateWeather();
+    updateWeather(localStorage.getItem('city') || 'Москва');
+
 
     function popupClassToggle() {
         popup.classList.toggle('active');
+        isFirst = false;
     };
 
     function popupClassToggleHandler(e) {
@@ -126,8 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const newCity = input.value;
 
-        updateWeather(newCity);
+        localStorage.setItem('city', input.value);
 
+        updateWeather(newCity);
     };
 
 
