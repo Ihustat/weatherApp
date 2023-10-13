@@ -118,6 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function popupClassToggle() {
         popup.classList.toggle('active');
         isFirst = false;
+
+        document.documentElement.style.overflow ? document.documentElement.style.overflow = '' : document.documentElement.style.overflow = 'hidden';
+
     };
 
     function popupClassToggleHandler(e) {
