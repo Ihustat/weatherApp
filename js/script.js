@@ -84,6 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="city-name">${name}</div>
 
+        <button class="btn choose-city">Выбрать город</button>
+
         <div class="weather-info">
             <div class="sun-state">
                 <img class="sun-state__img" src="${icon}" alt="condition img">
@@ -153,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (
       target &&
-      (target.classList.contains('city-name') ||
+      (target.classList.contains('choose-city') ||
         target.classList.contains('popup__close'))
     ) {
       popupClassToggle();
