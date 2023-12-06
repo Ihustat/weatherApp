@@ -1,39 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="top"></div>
 
-   <div id="app">
-    <div class="top"></div>
+      <div class="info"></div>
 
-    <div class="info">
-    </div>
-
-    <div class="popup">
+      <div class="popup">
         <div class="popup__close">&#10006;</div>
         <div class="popup__wrapper">
-            <div class="popup__name">Введите название города</div>
-                <form class="popup__form">
-                    <input type="text" class="popup__input" placeholder="Москва" required>
-                    <button class="btn popup__button">Показать</button>
-                </form>
+          <div class="popup__name">Введите название города</div>
+          <form class="popup__form">
+            <input
+              type="text"
+              class="popup__input"
+              placeholder="Москва"
+              required
+            />
+            <button class="btn popup__button">Показать</button>
+          </form>
 
-            <div class="error-message">Введите корректное название</div>
+          <div class="error-message">Введите корректное название</div>
         </div>
         <div class="popup__location">
-            <button class="btn popup__location-btn">Использовать геоданные</button>
+          <button class="btn popup__location-btn">
+            Использовать геоданные
+          </button>
         </div>
+      </div>
     </div>
-   </div>
-    
-    <script src="script.js"></script>
-</body>
+
+    <script src="js/script.js"></script>
+  </body>
 </html>
